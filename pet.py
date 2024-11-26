@@ -1,6 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
+import mysql.connector
 
+connector = mysql.connector.connect(
+    host="localhost",
+    user="root", 
+    password="", 
+    database="petshop"  
+)
+
+cursor= connector.cursor()
 
 def cadastrar_cliente():
 
