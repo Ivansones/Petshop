@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
@@ -10,6 +11,19 @@ connector = mysql.connector.connect(
 )
 
 cursor= connector.cursor()
+
+estilo_botao = {#dicionário com configurações do estilo dos botões
+        "width": 20,#largura do botão
+        "height": 2,#altura do botão
+        "font": ("Arial", 18, "bold"),#fonte do texto no botão
+        "bg": "#4CAF50",#cor verde no botão
+        "fg": "white",#cor branca no texto
+        "relief": "flat",#botão sem borda
+        "bd": 2,#espessura da borda (inativa)
+        "highlightthickness": 0,#desativa o realce ao redor
+        "activebackground": "#45a049",#cor verde mais clara quando o botão é clicado
+        "activeforeground": "white",#mantém o texto branco ao clicar
+    }
 
 def cadastrar_cliente():
 
@@ -40,11 +54,11 @@ def cadastrar_cliente():
     entry_endereco.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="Mandar", width=20, height=2, command=lambda:cadastrando_cliente(entry_nome,entry_id,entry_cpf,entry_endereco))
+    btn_salvar = tk.Button(root, text="Mandar", command=lambda:cadastrando_cliente(entry_nome,entry_id,entry_cpf,entry_endereco), **estilo_botao)
     btn_salvar.pack(pady=10)
 
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def cadastrando_cliente(entry_nome,entry_id,entry_cpf,entry_endereco):
@@ -69,11 +83,11 @@ def excluicao_cliente():
     entry_id.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="excluir", width=20, height=2, command=lambda: excluindo_cliente(entry_id))
+    btn_salvar = tk.Button(root, text="Excluir", command=lambda: excluindo_cliente(entry_id), **estilo_botao)
     btn_salvar.pack(pady=10)
     
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def excluindo_cliente(entry_id):
@@ -113,10 +127,10 @@ def atualizacao_cliente():
     entry_endereco.pack(pady=5)
 
 
-    btn_atualizar = tk.Button(root, text="atualizar", width=20, height=2, command=lambda: atualizando_cliente(entry_id,entry_nome,entry_cpf,entry_endereco))
+    btn_atualizar = tk.Button(root, text="Atualizar", command=lambda: atualizando_cliente(entry_id,entry_nome,entry_cpf,entry_endereco), **estilo_botao)
     btn_atualizar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 
@@ -142,10 +156,10 @@ def pesquisa_cliente():
     entry_id.pack(pady=5)
 
 
-    btn_pesquisar = tk.Button(root, text="pesquisa", width=20, height=2, command=lambda: pesquisando_cliente(entry_id))
+    btn_pesquisar = tk.Button(root, text="Pesquisa", command=lambda: pesquisando_cliente(entry_id), **estilo_botao)
     btn_pesquisar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def pesquisando_cliente(entry_id):  
@@ -189,21 +203,27 @@ def cadastrar_pet():
     entry_raca = tk.Entry(root)
     entry_raca.pack(pady=5)
 
+    lbl_especie = tk.Label(root, text="Especie:")
+    lbl_especie.pack(pady=5)
+    entry_especie = tk.Entry(root)
+    entry_especie.pack(pady=5)
 
-    btn_salvar = tk.Button(root, text="Mandar", width=20, height=2, command=lambda: cadastrando_pet(entry_id,entry_nome,entry_raca))
+
+    btn_salvar = tk.Button(root, text="Mandar", command=lambda: cadastrando_pet(entry_id,entry_nome,entry_raca,entry_especie), **estilo_botao)
     btn_salvar.pack(pady=10)
 
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 
-def cadastrando_pet(entry_id,entry_nome,entry_raca):
+def cadastrando_pet(entry_id,entry_nome,entry_raca,entry_especie):
     id= entry_id.get()
     nome= entry_nome.get()
     raca=entry_raca.get()
+    especie= entry_especie.get()
     try:
-        mandar= f'INSERT INTO pet(id,nome,raca) VALUES ({id},"{nome}","{raca}")'
+        mandar= f'INSERT INTO pet(id,nome,raca,especie) VALUES ({id},"{nome}","{raca}","{especie}")'
         cursor.execute(mandar)
         connector.commit()
         messagebox.showinfo("Sucesso", "pet cadastrado com sucesso!")
@@ -219,10 +239,10 @@ def excluir_pet():
     entry_id.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="excluir", width=20, height=2, command=lambda: excluindo_pet(entry_id))
+    btn_salvar = tk.Button(root, text="Excluir", command=lambda: excluindo_pet(entry_id), **estilo_botao)
     btn_salvar.pack(pady=10)
     
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def excluindo_pet(entry_id):
@@ -248,23 +268,29 @@ def atualizar_pet():
     entry_nome.pack(pady=5)
 
 
-    lbl_cpf = tk.Label(root, text="Raça:")
-    lbl_cpf.pack(pady=5)
+    lbl_raca = tk.Label(root, text="Raça:")
+    lbl_raca.pack(pady=5)
     entry_raca = tk.Entry(root)
     entry_raca.pack(pady=5)
 
+    lbl_especie = tk.Label(root, text="Especie:")
+    lbl_especie.pack(pady=5)
+    entry_especie = tk.Entry(root)
+    entry_especie.pack(pady=5)
 
-    btn_atualizar = tk.Button(root, text="atualizar", width=20, height=2, command=lambda: atualizando_pet(entry_id,entry_nome,entry_raca))
+
+    btn_atualizar = tk.Button(root, text="Atualizar", command=lambda: atualizando_pet(entry_id,entry_nome,entry_raca,entry_especie), **estilo_botao)
     btn_atualizar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
-def atualizando_pet(entry_id,entry_nome,entry_raca):
+def atualizando_pet(entry_id,entry_nome,entry_raca,entry_especie):
     id= entry_id.get()
     nome= entry_nome.get()
     raca= entry_raca.get()
+    especie= entry_especie.get()
     try:
-        trocar= f'UPDATE pet SET nome="{nome}",raca={raca} WHERE id={id}'
+        trocar= f'UPDATE pet SET nome="{nome}",raca="{raca}",especie="{especie}" WHERE id={id}'
         cursor.execute(trocar)
         connector.commit()
         messagebox.showinfo("Sucesso", "pet atualizado com sucesso!")
@@ -278,10 +304,10 @@ def pesquisar_pet():
     entry_id.pack(pady=5)
 
 
-    btn_pesquisar = tk.Button(root, text="pesquisa", width=20, height=2, command=lambda: pesquisando_pet(entry_id))
+    btn_pesquisar = tk.Button(root, text="Pesquisa", command=lambda: pesquisando_pet(entry_id), **estilo_botao)
     btn_pesquisar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 def pesquisando_pet(entry_id):
         id=entry_id.get()
@@ -289,7 +315,7 @@ def pesquisando_pet(entry_id):
             cursor.execute(f"SELECT * FROM pet WHERE id = '{id}'")
             pet = cursor.fetchone()
             if pet:
-                messagebox.showinfo("Resultado", f"Pet encontrado:\nID: {pet[0]}\nNome: {pet[1]}\nRaça: {pet[2]}")
+                messagebox.showinfo("Resultado", f"Pet encontrado:\nID: {pet[0]}\nNome: {pet[1]}\nRaça: {pet[2]}\nEspecie: {pet[3]}")
             else:
                 messagebox.showinfo("Resultado", "Nenhum pet encontrado com esse ID.")
             voltar_menu()
@@ -299,7 +325,6 @@ def pesquisando_pet(entry_id):
 def cadastrar_produto():
 
     esconder_menu_cliente()
-
 
     lbl_nome = tk.Label(root, text="Nome:")
     lbl_nome.pack(pady=5)
@@ -313,24 +338,30 @@ def cadastrar_produto():
     entry_id.pack(pady=5)
 
 
-    lbl_cpf = tk.Label(root, text="custo:")
-    lbl_cpf.pack(pady=5)
+    lbl_custo = tk.Label(root, text="Custo:")
+    lbl_custo.pack(pady=5)
     entry_custo = tk.Entry(root)
     entry_custo.pack(pady=5)
 
+    lbl_estoque = tk.Label(root, text="Em estoque:")
+    lbl_estoque.pack(pady=5)
+    entry_estoque = tk.Entry(root)
+    entry_estoque.pack(pady=5)
 
-    btn_salvar = tk.Button(root, text="Mandar", width=20, height=2, command=lambda: cadastrando_produto(entry_id,entry_nome,entry_custo))
+
+    btn_salvar = tk.Button(root, text="Mandar", command=lambda: cadastrando_produto(entry_id,entry_nome,entry_custo,entry_estoque), **estilo_botao)
     btn_salvar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
-def cadastrando_produto(entry_id,entry_nome,entry_custo):
+def cadastrando_produto(entry_id,entry_nome,entry_custo,entry_estoque):
     id= entry_id.get()
     nome= entry_nome.get()
     custo= entry_custo.get()
+    estoque= entry_estoque.get()
     try:
-        mandar= f'INSERT INTO produto(id,nome,custo) VALUES ({id},"{nome}",{custo})'
+        mandar= f'INSERT INTO produto(id,nome,custo,estoque) VALUES ({id},"{nome}",{custo},{estoque})'
         cursor.execute(mandar)
         connector.commit()
         messagebox.showinfo("Sucesso", "produto cadastrado com sucesso!")
@@ -345,10 +376,10 @@ def excluir_produto():
     entry_id.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="excluir", width=20, height=2, command=lambda: excluindo_produto(entry_id))
+    btn_salvar = tk.Button(root, text="Excluir", command=lambda: excluindo_produto(entry_id), **estilo_botao)
     btn_salvar.pack(pady=10)
     
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def excluindo_produto(entry_id):
@@ -376,25 +407,32 @@ def atualizar_produto():
     entry_id.pack(pady=5)
 
 
-    lbl_cpf = tk.Label(root, text="custo:")
-    lbl_cpf.pack(pady=5)
+    lbl_custo = tk.Label(root, text="Custo:")
+    lbl_custo.pack(pady=5)
     entry_custo = tk.Entry(root)
     entry_custo.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="Mandar", width=20, height=2, command=lambda: atualizando_produto(entry_id,entry_nome,entry_custo))
+    lbl_estoque = tk.Label(root, text="Em estoque:")
+    lbl_estoque.pack(pady=5)
+    entry_estoque = tk.Entry(root)
+    entry_estoque.pack(pady=5)
+
+
+    btn_salvar = tk.Button(root, text="Mandar", command=lambda: atualizando_produto(entry_id,entry_nome,entry_custo,entry_estoque), **estilo_botao)
     btn_salvar.pack(pady=10)
 
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
-def atualizando_produto(entry_id,entry_nome,entry_custo):
+def atualizando_produto(entry_id,entry_nome,entry_custo,entry_estoque):
     id= entry_id.get()
     nome= entry_nome.get()
     custo= entry_custo.get()
+    estoque= entry_estoque.get()
     try:
-        trocar= f'UPDATE produto SET nome="{nome}",custo={custo} WHERE id={id}'
+        trocar= f'UPDATE produto SET nome="{nome}",custo={custo},estoque={estoque} WHERE id={id}'
         cursor.execute(trocar)
         connector.commit()
         messagebox.showinfo("Sucesso", "produto atualizado com sucesso!")
@@ -408,10 +446,10 @@ def pesquisar_produto():
     entry_id.pack(pady=5)
 
 
-    btn_pesquisar = tk.Button(root, text="pesquisa", width=20, height=2, command=lambda: pesquisando_produto(entry_id))
+    btn_pesquisar = tk.Button(root, text="Pesquisa", command=lambda: pesquisando_produto(entry_id), **estilo_botao)
     btn_pesquisar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def pesquisando_produto(entry_id):
@@ -420,7 +458,7 @@ def pesquisando_produto(entry_id):
             cursor.execute(f"SELECT * FROM produto WHERE id = '{id}'")
             produto = cursor.fetchone()
             if produto:
-                messagebox.showinfo("Resultado", f"produto encontrado:\nID: {produto[0]}\nNome: {produto[1]}\nCusto: {produto[2]}")
+                messagebox.showinfo("Resultado", f"produto encontrado:\nID: {produto[0]}\nNome: {produto[1]}\nCusto: {produto[2]}\nEm estoque: {produto[3]}")
             else:
                 messagebox.showinfo("Resultado", "Nenhum produto encontrado com esse ID.")
             voltar_menu()
@@ -443,17 +481,17 @@ def cadastrar_servico():
     entry_id = tk.Entry(root)
     entry_id.pack(pady=5)
 
-    lbl_cpf = tk.Label(root, text="custo:")
+    lbl_cpf = tk.Label(root, text="Custo:")
     lbl_cpf.pack(pady=5)
     entry_custo = tk.Entry(root)
     entry_custo.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="Mandar", width=20, height=2, command=lambda: cadastrando_servico(entry_id,entry_nome,entry_custo))
+    btn_salvar = tk.Button(root, text="Mandar", command=lambda: cadastrando_servico(entry_id,entry_nome,entry_custo), **estilo_botao)
     btn_salvar.pack(pady=10)
 
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def cadastrando_servico(entry_id,entry_nome,entry_custo):
@@ -476,10 +514,10 @@ def excluir_servico():
     entry_id.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="excluir", width=20, height=2, command=lambda: excluindo_servico(entry_id))
+    btn_salvar = tk.Button(root, text="Excluir", command=lambda: excluindo_servico(entry_id), **estilo_botao)
     btn_salvar.pack(pady=10)
     
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 def excluindo_servico(entry_id):
     id= entry_id.get()
@@ -506,17 +544,17 @@ def atualizar_servico():
     entry_id.pack(pady=5)
 
 
-    lbl_cpf = tk.Label(root, text="custo:")
+    lbl_cpf = tk.Label(root, text="Custo:")
     lbl_cpf.pack(pady=5)
     entry_custo = tk.Entry(root)
     entry_custo.pack(pady=5)
 
 
-    btn_salvar = tk.Button(root, text="Mandar", width=20, height=2, command=lambda: atualizando_servico(entry_id,entry_nome,entry_custo))
+    btn_salvar = tk.Button(root, text="Mandar", command=lambda: atualizando_servico(entry_id,entry_nome,entry_custo), **estilo_botao)
     btn_salvar.pack(pady=10)
 
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 def atualizando_servico(entry_id,entry_nome,entry_custo):
     id= entry_id.get()
@@ -537,10 +575,10 @@ def pesquisar_servico():
     entry_id.pack(pady=5)
 
 
-    btn_pesquisar = tk.Button(root, text="pesquisa", width=20, height=2, command=lambda: pesquisando_servico(entry_id))
+    btn_pesquisar = tk.Button(root, text="Pesquisa", command=lambda: pesquisando_servico(entry_id), **estilo_botao)
     btn_pesquisar.pack(pady=10)
 
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 def pesquisando_servico(entry_id):
         id=entry_id.get()
@@ -571,20 +609,20 @@ def menu_cliente():
     esconder_menu_cliente()
 
     # Criar os botões do menu de clientes
-    btn_cadastrar = tk.Button(root, text="Cadastrar Cliente", width=20, height=2, command=cadastrar_cliente)
+    btn_cadastrar = tk.Button(root, text="Cadastrar Cliente", command=cadastrar_cliente, **estilo_botao)
     btn_cadastrar.pack(pady=5)
 
-    btn_atualizar = tk.Button(root, text="Atualizar Cliente", width=20, height=2, command=atualizar_cliente)
+    btn_atualizar = tk.Button(root, text="Atualizar Cliente", command=atualizar_cliente, **estilo_botao)
     btn_atualizar.pack(pady=5)
 
-    btn_excluir = tk.Button(root, text="Excluir Cliente", width=20, height=2, command=excluir_cliente)
+    btn_excluir = tk.Button(root, text="Excluir Cliente", command=excluir_cliente, **estilo_botao)
     btn_excluir.pack(pady=5)
 
-    btn_pesquisar = tk.Button(root, text="Pesquisar Cliente", width=20, height=2, command=pesquisar_cliente)
+    btn_pesquisar = tk.Button(root, text="Pesquisar Cliente", command=pesquisar_cliente, **estilo_botao)
     btn_pesquisar.pack(pady=5)
 
     # Criar o botão Voltar
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def menu_pets():
@@ -592,20 +630,20 @@ def menu_pets():
     esconder_menu_cliente()
 
     # Criar os botões do menu de clientes
-    btn_cadastrar = tk.Button(root, text="Cadastrar pet", width=20, height=2, command=cadastrar_pet)
+    btn_cadastrar = tk.Button(root, text="Cadastrar pet", command=cadastrar_pet, **estilo_botao)
     btn_cadastrar.pack(pady=5)
 
-    btn_atualizar = tk.Button(root, text="Atualizar pet", width=20, height=2, command=atualizar_pet)
+    btn_atualizar = tk.Button(root, text="Atualizar pet", command=atualizar_pet, **estilo_botao)
     btn_atualizar.pack(pady=5)
 
-    btn_excluir = tk.Button(root, text="Excluir pet", width=20, height=2, command=excluir_pet)
+    btn_excluir = tk.Button(root, text="Excluir pet", command=excluir_pet, **estilo_botao)
     btn_excluir.pack(pady=5)
 
-    btn_pesquisar = tk.Button(root, text="Pesquisar pet", width=20, height=2, command=pesquisar_pet)
+    btn_pesquisar = tk.Button(root, text="Pesquisar pet", command=pesquisar_pet, **estilo_botao)
     btn_pesquisar.pack(pady=5)
 
     # Criar o botão Voltar
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def menu_produtos():
@@ -613,20 +651,20 @@ def menu_produtos():
     esconder_menu_cliente()
 
     # Criar os botões do menu de clientes
-    btn_cadastrar = tk.Button(root, text="Cadastrar produto", width=20, height=2, command=cadastrar_produto)
+    btn_cadastrar = tk.Button(root, text="Cadastrar produto", command=cadastrar_produto, **estilo_botao)
     btn_cadastrar.pack(pady=5)
 
-    btn_atualizar = tk.Button(root, text="Atualizar produto", width=20, height=2, command=atualizar_produto)
+    btn_atualizar = tk.Button(root, text="Atualizar produto", command=atualizar_produto, **estilo_botao)
     btn_atualizar.pack(pady=5)
 
-    btn_excluir = tk.Button(root, text="Excluir produto", width=20, height=2, command=excluir_produto)
+    btn_excluir = tk.Button(root, text="Excluir produto", command=excluir_produto, **estilo_botao)
     btn_excluir.pack(pady=5)
 
-    btn_pesquisar = tk.Button(root, text="Pesquisar produto", width=20, height=2, command=pesquisar_produto)
+    btn_pesquisar = tk.Button(root, text="Pesquisar produto", command=pesquisar_produto, **estilo_botao)
     btn_pesquisar.pack(pady=5)
 
     # Criar o botão Voltar
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
 def menu_servicos():
@@ -634,31 +672,22 @@ def menu_servicos():
     esconder_menu_cliente()
 
     # Criar os botões do menu de clientes
-    btn_cadastrar = tk.Button(root, text="Cadastrar serviço", width=20, height=2, command=cadastrar_servico)
+    btn_cadastrar = tk.Button(root, text="Cadastrar serviço", command=cadastrar_servico, **estilo_botao)
     btn_cadastrar.pack(pady=5)
 
-    btn_atualizar = tk.Button(root, text="Atualizar serviço", width=20, height=2, command=atualizar_servico)
+    btn_atualizar = tk.Button(root, text="Atualizar serviço", command=atualizar_servico, **estilo_botao)
     btn_atualizar.pack(pady=5)
 
-    btn_excluir = tk.Button(root, text="Excluir serviço", width=20, height=2, command=excluir_servico)
+    btn_excluir = tk.Button(root, text="Excluir serviço", command=excluir_servico, **estilo_botao)
     btn_excluir.pack(pady=5)
 
-    btn_pesquisar = tk.Button(root, text="Pesquisar serviço", width=20, height=2, command=pesquisar_servico)
+    btn_pesquisar = tk.Button(root, text="Pesquisar serviço", command=pesquisar_servico, **estilo_botao)
     btn_pesquisar.pack(pady=5)
 
     # Criar o botão Voltar
-    btn_voltar = tk.Button(root, text="Voltar", width=20, height=2, command=voltar_menu)
+    btn_voltar = tk.Button(root, text="Voltar", command=voltar_menu, **estilo_botao)
     btn_voltar.pack(pady=10)
 
-# Funções para as outras opções (Pets, Produtos e Serviços)
-def exibir_pets():
-    messagebox.showinfo("Pets", "Tela de Pets")
-
-def exibir_produtos():
-    messagebox.showinfo("Produtos", "Tela de Produtos")
-
-def exibir_servicos():
-    messagebox.showinfo("Serviços", "Tela de Serviços")
 
 
 def atualizar_cliente():
@@ -676,20 +705,20 @@ root.title("Página Inicial")
 root.geometry("400x300")  # Definindo o tamanho da janela
 
 # Título
-titulo = tk.Label(root, text="Bem-vindo ao Sistema", font=("Arial", 16))
+titulo = tk.Label(root, text="Bem-vindo ao Sistema de Gerenciamento do seu Petshop!", font=("Arial", 16))
 titulo.pack(pady=20)
 
 # Botões principais
-btn_cliente = tk.Button(root, text="Clientes", width=20, height=2, command=menu_cliente)
+btn_cliente = tk.Button(root, text="Clientes", command=menu_cliente, **estilo_botao)
 btn_cliente.pack(pady=5)
 
-btn_pets = tk.Button(root, text="Pets", width=20, height=2, command=menu_pets)
+btn_pets = tk.Button(root, text="Pets", command=menu_pets, **estilo_botao)
 btn_pets.pack(pady=5)
 
-btn_produtos = tk.Button(root, text="Produtos", width=20, height=2, command=menu_produtos)
+btn_produtos = tk.Button(root, text="Produtos", command=menu_produtos, **estilo_botao)
 btn_produtos.pack(pady=5)
 
-btn_servicos = tk.Button(root, text="Serviços", width=20, height=2, command=menu_servicos)
+btn_servicos = tk.Button(root, text="Serviços", command=menu_servicos, **estilo_botao)
 btn_servicos.pack(pady=5)
 
 # Inicia a interface
