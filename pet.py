@@ -723,3 +723,5 @@ btn_servicos.pack(pady=5)
 
 # Inicia a interface
 root.mainloop()
+
+#Link slides: https://www.canva.com/design/DAGXiJVKuwM/b0ECXlvyEtu5iCa-JNzlGw/edit
